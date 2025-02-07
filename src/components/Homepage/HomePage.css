@@ -1,0 +1,189 @@
+/* Homepage.css */
+
+.homepage {
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: rgb(21, 138, 21);
+  color: white;
+}
+
+.navbar .nav-left {
+  font-size: 1.5rem;
+}
+
+.navbar .nav-right {
+  display: flex;
+  gap: 1rem;
+  list-style-type: none;
+}
+
+.navbar .nav-right li {
+  cursor: pointer;
+}
+
+.menu-btn {
+  position: absolute;
+  top: calc(2rem + 50px); /* Places the button 2rem below the PawFur logo */
+  left: 10px; /* Align horizontally near the About Us section */
+  background-color: rgb(21, 138, 21);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.menu-btn:hover {
+  background-color: rgb(16, 110, 16); /* Darker green for hover */
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: calc(2rem + 90px); /* Adjusted to stay under the Menu button */
+  left: 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 100;
+  width: 200px;
+}
+
+.menu-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-items > li {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  color: black;
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.3s ease;
+}
+
+.menu-items > li:hover {
+  background-color: rgba(21, 138, 21, 0.1);
+}
+
+.dropdown-menu {
+  position: relative;
+}
+
+.submenu {
+  display: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  z-index: 200;
+}
+
+.dropdown-menu:hover .submenu {
+  display: block;
+}
+
+.submenu > li {
+  padding: 10px;
+  font-size: 14px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.submenu > li:last-child {
+  border-bottom: none;
+}
+
+.submenu > li:hover {
+  background-color: rgba(21, 138, 21, 0.1);
+}
+
+.social-links {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.social-links a {
+  color: rgb(21, 138, 21);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+  color: rgb(16, 110, 16); /* Darker green for hover */
+}
+
+
+.hero {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.search-bot {
+  flex: 1;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.search-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.search-input {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 25px;
+  border: 2px solid rgb(21, 138, 21);
+  font-size: 1rem;
+  outline: none;
+}
+
+.search-button {
+  padding: 12px 25px;
+  border-radius: 25px;
+  border: none;
+  background-color: rgb(21, 138, 21);
+  color: white;
+  cursor: pointer;
+  transition: filter 0.3s;
+}
+
+.search-button:hover {
+  filter: brightness(0.9);
+}
+
+.search-response {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid rgb(21, 138, 21);
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: rgb(21, 138, 21);
+  color: white;
+}

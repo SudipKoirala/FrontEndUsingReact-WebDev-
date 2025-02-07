@@ -1,0 +1,212 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  font-family: Arial, sans-serif;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.7;
+  z-index: -1;
+}
+
+/* Topbar */
+.topbar {
+  display: flex;
+}
+
+.logo {
+  height: 150px;
+  width: 200px;
+  background-size: cover;
+  margin-right: 60px;
+}
+
+.pictures {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+  width: 70%;
+}
+
+.lpic, .spic {
+  background-size: cover;
+  margin-right: 10px;
+}
+
+.lpic {
+  height: 192px;
+  width: 150px;
+  background-color: black;
+}
+
+.spic {
+  height: 120px;
+  width: 150px;
+  background-color: aquamarine;
+}
+
+/* Main Section */
+.main {
+  height: 100vh;
+  width: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 50px;
+}
+
+.leftbsign {
+  background-color: rgba(245, 245, 245, 0.4);
+  
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  height: 400px;
+
+}
+
+/* .rightbsign {
+  background-color: rgba(245, 245, 245, 0.4);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  height: 400px;
+} */
+
+.leftimg1, .leftimg2 {
+  width: 100%;
+  height: 400px; /* Or any height that fits your layout */
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.rightbsign {
+  background-color: rgba(245, 245, 245, 0.4);
+  color: rgb(21, 138, 21);
+  width: 400px;
+  height: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.rightbsign .text {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: rgb(21, 138, 21);
+}
+
+.rightbsign .underline {
+  width: 50px;
+  height: 2px;
+  background-color: rgb(21, 138, 21);
+  margin-bottom: 20px;
+}
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.form-row input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid rgb(21, 138, 21);
+  border-radius: 5px;
+  outline: none;
+}
+
+.email,
+.passwords {
+  margin-bottom: 15px;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid rgb(21, 138, 21);
+  border-radius: 5px;
+  outline: none;
+}
+
+.passwords .password1,
+.passwords .password2 {
+  margin-bottom: 10px;
+}
+
+.forgetpass {
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+.forgetpass span {
+  color: rgb(21, 138, 21);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.label {
+  color: black;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+.label span {
+  color: rgb(21, 138, 21);
+cursor: pointer;
+}
+
+.submits {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.submit {
+  background-color: rgb(21, 138, 21);
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.submit.gray {
+  background-color: #ccc;
+  color: #888;
+  cursor: pointer;
+}
+
+.submit:hover {
+  background-color: rgb(17, 118, 17);
+}
