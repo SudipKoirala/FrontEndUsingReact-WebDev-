@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
@@ -6,8 +5,9 @@ import './HomePage.css';
 const Homepage = () => {
   const [query, setQuery] = useState('');
   const [response, setResponse] = useState('');
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null); // Reference for the menu
+  const [menuOpen, setMenuOpen] = useState(false); // Sidebar toggle state
+  const [submenuOpen, setSubmenuOpen] = useState({ dogs: false, cats: false }); // Submenu states
+  const menuRef = useRef(null);
 
   const themeColor = 'rgb(21, 138, 21)';
 
@@ -50,6 +50,29 @@ const Homepage = () => {
     }
   ];
 
+  const interestingFacts = [
+    {
+      title: 'Do You Know?',
+      fact: 'Dogs have three eyelids to protect and lubricate their eyes.'
+    },
+    {
+      title: 'Fun Fact',
+      fact: 'Cats can rotate their ears 180 degrees to hear better.'
+    },
+    {
+      title: 'Did You Know?',
+      fact: 'A dog\'s sense of smell is 40 times better than a human\'s.'
+    },
+    {
+      title: 'Amazing Fact',
+      fact: 'The purring of a cat can help reduce stress in humans.'
+    },
+    {
+      title: 'Surprising Fact',
+      fact: 'Dogs\' nose prints are unique, much like human fingerprints.'
+    }
+  ];
+
   const handleSearch = () => {
     if (!query.trim()) return;
 
@@ -69,7 +92,14 @@ const Homepage = () => {
   };
 
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+    setMenuOpen((prev) => !prev); // Toggle the sidebar state
+  };
+
+  const toggleSubmenu = (key) => {
+    setSubmenuOpen((prev) => ({
+      ...prev,
+      [key]: !prev[key] // Toggle the specific submenu
+    }));
   };
 
   // Close menu if clicking outside
@@ -77,6 +107,7 @@ const Homepage = () => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setMenuOpen(false); // Close the menu if clicked outside
+        setSubmenuOpen({ dogs: false, cats: false }); // Close submenus
       }
     };
 
@@ -91,11 +122,7 @@ const Homepage = () => {
     <div className="homepage">
       <nav className="navbar" style={{ backgroundColor: themeColor }}>
         <div className="nav-left">
-          <div
-            className="logo"
-            onClick={refreshPage}
-            style={{ cursor: 'pointer' }}
-          >
+          <div className="logo" onClick={refreshPage} style={{ cursor: 'pointer' }}>
             PawFur
           </div>
         </div>
@@ -112,84 +139,93 @@ const Homepage = () => {
         </ul>
       </nav>
 
-      <button
-        className="menu-btn"
-        onClick={toggleMenu}
-        style={{ position: 'absolute', top: 'calc(2rem + 50px)', left: '10px' }}
-      >
-        Menu
+      <button className="menu-toggle-btn" onClick={toggleMenu}>
+        {menuOpen ? 'Menu' : 'Menu'}
       </button>
-      {menuOpen && (
-        <div className="menu-dropdown" ref={menuRef}>
-          <ul className="menu-items">
-            <li>Recent News</li>
-            <li className="dropdown-menu">
+
+      <div className={`sidebar ${menuOpen ? 'open' : ''}`} ref={menuRef}>
+        <ul className="menu-items">
+          <li>Recent News</li>
+          <li className="dropdown-menu">
+            <div onClick={() => toggleSubmenu('dogs')} className="dropdown-toggle">
               About Dogs
-              <ul className="submenu">
-                <li>Foods</li>
-                <li>Breed Info</li>
-                <li>Training</li>
-              </ul>
-            </li>
-            <li className="dropdown-menu">
-              About Cats
-              <ul className="submenu">
-                <li>Nutrition</li>
-                <li>Behavior</li>
-                <li>Grooming</li>
-              </ul>
-            </li>
-          </ul>
-          <div className="social-links">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-              Facebook
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-              Twitter
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-              Instagram
-            </a>
-          </div>
-        </div>
-      )}
-
-      <div>
-        <main className="content">
-          <header className="hero">
-            <h1>Welcome to PawFur</h1>
-            <p>Your ultimate pet care companion</p>
-          </header>
-
-          <section className="search-bot">
-            <h2>Ask Our Search Bot</h2>
-            <div className="search-container">
-              <input
-                type="text"
-                placeholder="Ask me anything about your pet..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                className="search-input"
-                style={{ borderColor: themeColor }}
-              />
-              <button
-                onClick={handleSearch}
-                className="search-button"
-                style={{ backgroundColor: themeColor }}
-              >
-                Search
-              </button>
             </div>
-            {response && (
-              <div className="search-response" style={{ borderLeftColor: themeColor }}>
-                <h3>Bot Response:</h3>
-                <p>{response}</p>
-              </div>
-            )}
-          </section>
-        </main>
+            <ul className={`submenu ${submenuOpen.dogs ? 'open' : ''}`}>
+              <li>Foods</li>
+              <li>Breed Info</li>
+              <li>Training</li>
+            </ul>
+          </li>
+          <li className="dropdown-menu">
+            <div onClick={() => toggleSubmenu('cats')} className="dropdown-toggle">
+              About Cats
+            </div>
+            <ul className={`submenu ${submenuOpen.cats ? 'open' : ''}`}>
+              <li>Nutrition</li>
+              <li>Behavior</li>
+              <li>Grooming</li>
+            </ul>
+          </li>
+        </ul>
+        <div className="social-links">
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+            Facebook
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+            Twitter
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+            Instagram
+          </a>
+        </div>
       </div>
+
+      <main className={`main-content ${menuOpen ? 'shifted' : ''}`}>
+        <header className="hero">
+          <h1>Welcome to PawFur</h1>
+          <p>Your ultimate pet care companion</p>
+        </header>
+
+        <section className="search-bot">
+          <h2>Ask Our Search Bot</h2>
+          <div className="search-container">
+            <input
+              type="text"
+              placeholder="Ask me anything about your pet..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+              className="search-input"
+              style={{ borderColor: themeColor }}
+            />
+            <button
+              onClick={handleSearch}
+              className="search-button"
+              style={{ backgroundColor: themeColor }}
+            >
+              Search
+            </button>
+          </div>
+          {response && (
+            <div className="search-response" style={{ borderLeftColor: themeColor }}>
+              <h3>Bot Response:</h3>
+              <p>{response}</p>
+            </div>
+          )}
+        </section>
+
+        <section className="facts-section">
+          <h2>Do You Know?</h2>
+          <div className="facts-grid">
+            {interestingFacts.map((item, index) => (
+              <div className="fact-card" key={index}>
+                <h3>{item.title}</h3>
+                <p>{item.fact}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </main>
 
       <footer>
         <p>&copy; 2025 PawFur. All rights reserved.</p>
