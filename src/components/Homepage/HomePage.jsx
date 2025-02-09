@@ -2,12 +2,25 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
 
+
 const Homepage = () => {
   const [query, setQuery] = useState('');
   const [response, setResponse] = useState('');
-  const [menuOpen, setMenuOpen] = useState(false); // Sidebar toggle state
-  const [submenuOpen, setSubmenuOpen] = useState({ dogs: false, cats: false }); // Submenu states
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [submenuOpen, setSubmenuOpen] = useState({ dogs: false, cats: false });
+  
+  const [newPost, setNewPost] = useState({ title: '', category: '', content: '', upvotes: 0, downvotes: 0 });
+  const [showForm, setShowForm] = useState(false); // Manage form visibility
+  const [searchPosts, setSearchPosts] = useState([]);  // This will hold posts that should only appear via search
+  const [showPosts, setShowPosts] = useState(false);  // Track if posts should be shown
+  const [posts, setPosts] = useState([]);
+  const [searchResult, setSearchResult] = useState(null); // Stores the post or QA object
+
+  
   const menuRef = useRef(null);
+console.log(showForm); // Check if the form visibility changes
+console.log(newPost); // Check the current state of the form inputs
+console.log(posts); // Check if the posts array updates after submission
 
   const themeColor = 'rgb(21, 138, 21)';
 
@@ -73,20 +86,106 @@ const Homepage = () => {
     }
   ];
 
-  const handleSearch = () => {
-    if (!query.trim()) return;
+  
+  
 
-    const foundAnswer = petQA.find((qa) =>
-      qa.question.toLowerCase() === query.toLowerCase()
-    );
-
-    setResponse(
-      foundAnswer
-        ? foundAnswer.answer
-        : 'Sorry, I can only answer specific pet health questions. Try asking about common dog/cat health issues.'
-    );
+  const handlePostSubmit = () => {
+    // Trim and validate input fields
+    const trimmedTitle = newPost.title.trim();
+    const trimmedContent = newPost.content.trim();
+    
+    if (!trimmedTitle || !newPost.category || !trimmedContent) {
+      alert("Please fill in all the fields (Title, Category, and Content) before submitting.");
+      return;
+    }
+  
+    // Create the updated post
+    const updatedPost = { 
+      ...newPost, 
+      id: Date.now(), 
+      title: trimmedTitle, 
+      content: trimmedContent 
+    };
+  
+    // Add post to posts and searchPosts
+    setPosts((prevPosts) => [...prevPosts, updatedPost]);
+    setSearchPosts((prevSearchPosts) => [...prevSearchPosts, updatedPost]);
+  
+    // Reset the form fields
+    setNewPost({ title: '', category: '', content: '', upvotes: 0, downvotes: 0 });
+  
+    // Hide the post form after submission
+    setShowForm(false);
+  
+    // Show success message
+    alert("Your post has been successfully updated!");
   };
+  
+  
+  
+  
+  
 
+  
+
+  // Function to handle upvote
+  const handleUpvote = (post) => {
+    post.upvotes += 1;
+    setSearchPosts([...searchPosts]); // Update the post list to reflect the changes
+    setSearchResult({ type: "post", data: post }); // Update the current post view
+  };
+  
+  const handleDownvote = (post) => {
+    post.downvotes += 1;
+    setSearchPosts([...searchPosts]); // Update the post list to reflect the changes
+    setSearchResult({ type: "post", data: post }); // Update the current post view
+  };
+  
+  
+  const handleSearch = () => {
+    if (!query.trim()) {
+      // Show default response (petQA) when no search term is entered
+      const defaultQA = { question: "Ask me pets-related questions!", answer: "" };
+  
+      setSearchResult({
+        type: "qa",
+        data: defaultQA,
+      });
+      return;
+    }
+  
+    // Check if a post matches the search query
+    const foundPost = posts.find(
+      (post) =>
+        post.title.toLowerCase().includes(query.toLowerCase()) ||
+        post.content.toLowerCase().includes(query.toLowerCase())
+    );
+  
+    if (foundPost) {
+      setSearchResult({ type: "post", data: foundPost });
+      return;
+    }
+  
+    // Check if any petQA matches the search query
+    const foundQA = petQA.find((qa) =>
+      qa.question.toLowerCase().includes(query.toLowerCase())
+    );
+  
+    if (foundQA) {
+      setSearchResult({ type: "qa", data: foundQA });
+    } else {
+      // If no results found in both posts and QA, show a default message
+      setSearchResult({
+        type: "qa",
+        data: { question: "No matching questions found", answer: "Ask me pets-related questions!" },
+      });
+    }
+  };
+  
+
+
+
+  
   const refreshPage = () => {
     window.location.reload();
   };
@@ -127,18 +226,13 @@ const Homepage = () => {
           </div>
         </div>
         <ul className="nav-right">
-          <li>
-            <Link to="/about">About Us</Link>
-          </li>
-          <li>
-            <Link to="/contact">Contact Us</Link>
-          </li>
-          <li>
-            <Link to="/logout">Logout</Link>
-          </li>
+          <li><Link to="/about">About Us</Link></li>
+          <li><Link to="/contact">Contact Us</Link></li>
+          <li><Link to="/logout">Logout</Link></li>
         </ul>
       </nav>
 
+      {/* Sidebar Toggle */}
       <button className="menu-toggle-btn" onClick={toggleMenu}>
         {menuOpen ? 'Menu' : 'Menu'}
       </button>
@@ -168,15 +262,9 @@ const Homepage = () => {
           </li>
         </ul>
         <div className="social-links">
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-            Facebook
-          </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-            Twitter
-          </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-            Instagram
-          </a>
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
         </div>
       </div>
 
@@ -186,52 +274,131 @@ const Homepage = () => {
           <p>Your ultimate pet care companion</p>
         </header>
 
+        {/* Add Post Button */}
+<button className="add-post-btn" onClick={() => setShowForm(true)}>
+  Add Post
+</button>
+
+{/* Add Post Form */}
+{showForm && (
+  <div className="add-post-form">
+    <input
+      type="text"
+      placeholder="Post Title"
+      value={newPost.title}
+      onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+    />
+    
+    {/* Category Dropdown */}
+    <select
+      value={newPost.category}
+      onChange={(e) => setNewPost({ ...newPost, category: e.target.value })}
+      className="category-dropdown"
+    >
+      <option value="">Select Category</option>
+      <option value="Dogs">Dogs</option>
+      <option value="Cats">Cats</option>
+    </select>
+
+    <textarea
+      placeholder="Content"
+      value={newPost.content}
+      onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
+    />
+    
+    <div className="form-actions">
+      <button className="submit-btn" onClick={handlePostSubmit}>
+        Submit Post
+      </button>
+      <button className="cancel-btn" onClick={() => setShowForm(false)}>
+        Cancel
+      </button>
+    </div>
+  </div>
+)}
+
+
+
+
+        {/* Search Bot */}
         <section className="search-bot">
-          <h2>Ask Our Search Bot</h2>
-          <div className="search-container">
-            <input
-              type="text"
-              placeholder="Ask me anything about your pet..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-              className="search-input"
-              style={{ borderColor: themeColor }}
-            />
-            <button
-              onClick={handleSearch}
-              className="search-button"
-              style={{ backgroundColor: themeColor }}
-            >
-              Search
-            </button>
-          </div>
-          {response && (
-            <div className="search-response" style={{ borderLeftColor: themeColor }}>
-              <h3>Bot Response:</h3>
-              <p>{response}</p>
-            </div>
-          )}
-        </section>
+  <h2>Ask Our Search Bot</h2>
+  <div className="search-container">
+    <input
+      type="text"
+      placeholder="Ask me anything about your pet..."
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+      onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+      className="search-input"
+      style={{ borderColor: themeColor }}
+    />
+    <button
+      onClick={handleSearch}
+      className="search-button"
+      style={{ backgroundColor: themeColor }}
+    >
+      Search
+    </button>
+  </div>
+
+  <div className="search-response" style={{ borderLeftColor: themeColor }}>
+  {searchResult ? (
+    searchResult.type === "post" ? (
+      <div>
+        <h4>{searchResult.data.title}</h4>
+        <p>Category: {searchResult.data.category}</p>
+        <p>{searchResult.data.content}</p>
+
+        <p className="look">Look votes for the help!</p>
+
+        {/* Render Verified or Not Helpful based on upvotes/downvotes */}
+        {searchResult.data.upvotes > 5 && (
+          <p className="verified-label">
+            <span role="img" aria-label="star">⭐</span> Verified
+          </p>
+        )}
+        {searchResult.data.downvotes > 5 && (
+          <p className="not-helpful-label">
+            <span role="img" aria-label="poop">💩</span> Not Helpful
+          </p>
+        )}
+
+        <button onClick={() => handleUpvote(searchResult.data)}>
+          Upvote ({searchResult.data.upvotes})
+        </button>
+        <button onClick={() => handleDownvote(searchResult.data)}>
+          Downvote ({searchResult.data.downvotes})
+        </button>
+      </div>
+    ) : (
+      <div>
+        <p>{searchResult.data.answer}</p>
+      </div>
+    )
+  ) : (
+    <p>Type something to search!</p>
+  )}
+</div>
+
+</section>
+
 
         <section className="facts-section">
-          <h2>Do You Know?</h2>
-          <div className="facts-grid">
-            {interestingFacts.map((item, index) => (
-              <div className="fact-card" key={index}>
-                <h3>{item.title}</h3>
-                <p>{item.fact}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+    <h2>Interesting Facts</h2>
+    <div className="facts-grid">
+      {interestingFacts.map((fact, index) => (
+        <div key={index} className="fact-card">
+          <h3>{fact.title}</h3>
+          <p>{fact.fact}</p>
+        </div>
+      ))}
+    </div>
+  </section>
       </main>
-
-      <footer>
-        <p>&copy; 2025 PawFur. All rights reserved.</p>
-      </footer>
     </div>
   );
 };
+
 
 export default Homepage;

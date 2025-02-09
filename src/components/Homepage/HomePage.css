@@ -10,7 +10,6 @@
   padding: 1rem;
   background-color: rgb(21, 138, 21);
   color: white;
-  
 }
 
 .navbar .nav-left {
@@ -54,6 +53,7 @@
 .nav-right li:not(:last-child) {
   margin-right: 10px;
 }
+
 /* Styling for Logout Link */
 .nav-right li:last-child a {
   background-color: #c0392b; /* Red for Logout */
@@ -72,9 +72,6 @@
   transform: scale(1.1); /* Slight zoom effect on hover */
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Enhanced hover shadow */
 }
-
-
-
 
 .menu-toggle-btn {
   position: fixed;
@@ -199,7 +196,6 @@
   }
 }
 
-
 .hero {
   text-align: center;
   margin-top: 4rem;
@@ -250,7 +246,6 @@
   border-left: 4px solid rgb(21, 138, 21);
 }
 
-
 .facts-section {
   text-align: center;
   background-color: rgba(245, 245, 245, 0.4);
@@ -278,10 +273,210 @@
   color: #fff;
 }
 
+/* Style for the "Add Post" button */
+.add-post-btn {
+  background-color: #158a15; /* Green background color */
+  color: white;
+  border: none;
+  border-radius: 50%; /* Make it circular */
+  width: 60px; /* Button width */
+  height: 60px; /* Button height */
+  font-size: 20px; /* Font size */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-post-btn:hover {
+  background-color: #126e12; /* Darker green when hovered */
+}
+
+/* Style for the Post Modal (Form) */
+.post-modal {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  width: 400px;
+  max-width: 90%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.post-modal input,
+.post-modal textarea,
+.post-modal select {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.post-modal textarea {
+  min-height: 100px;
+}
+
+.post-modal button {
+  padding: 10px 15px;
+  background-color: #158a15;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.post-modal button:hover {
+  background-color: #126e12;
+}
+
+.post-modal .cancel-btn {
+  background-color: #f44336;
+}
+
+.post-modal .cancel-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* Style to dim the background when modal is open */
+.main-content {
+  transition: transform 0.3s;
+}
+
+.main-content.shifted {
+  transform: translateX(250px); /* Slide content when menu is open */
+}
+
 
 footer {
   text-align: center;
   padding: 1rem;
   background-color: rgb(21, 138, 21);
   color: white;
+}
+
+
+.add-post-btn {
+  background-color: rgb(21, 138, 21);
+  color: white;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.add-post-btn:hover {
+  background-color: #1e7e1e;
+}
+
+
+/* Add Post Button */
+.add-post-btn {
+  background-color: #1b8a15; /* Green */
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.add-post-btn:hover {
+  background-color: #169b18;
+}
+
+/* Add Post Form */
+.add-post-form {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-post-form input,
+.add-post-form select,
+.add-post-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.add-post-form input:focus,
+.add-post-form select:focus,
+.add-post-form textarea:focus {
+  border-color: #1b8a15;
+  outline: none;
+}
+
+/* Category Dropdown */
+.category-dropdown {
+  font-size: 16px;
+}
+
+/* Form Actions (Submit and Cancel buttons) */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.submit-btn,
+.cancel-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-btn {
+  background-color: #1b8a15; /* Green */
+  color: white;
+}
+
+.submit-btn:hover {
+  background-color: #169b18;
+}
+
+.cancel-btn {
+  background-color: #f44336; /* Red */
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #e53935;
+}
+
+
+ .look {
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 10px;
+  text-align: center;
+  padding: 5px;
+  background-color: #eaf4e7;  /* Soft greenish background */
+  border-radius: 5px;
+  border: 1px solid #aaa;  /* Subtle border to distinguish the message */
 }
