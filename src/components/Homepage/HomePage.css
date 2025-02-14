@@ -1,3 +1,4 @@
+
 /* Homepage.css */
 
 .homepage {
@@ -6,14 +7,22 @@
 
 .navbar {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 10px 20px;
   background-color: rgb(21, 138, 21);
   color: white;
+  height: 150px;
 }
+
+
 
 .navbar .nav-left {
   font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
 /* Navigation Right Links */
@@ -23,6 +32,7 @@
   gap: 15px;
   margin: 0;
   padding: 0;
+  margin-top: 3rem;
 }
 
 .nav-right li {
@@ -49,13 +59,10 @@
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Add Spacing Between List Items */
-.nav-right li:not(:last-child) {
-  margin-right: 10px;
-}
+
 
 /* Styling for Logout Link */
-.nav-right li:last-child a {
+.logout {
   background-color: #c0392b; /* Red for Logout */
   color: white; /* White text */
   font-weight: bold;
@@ -64,9 +71,11 @@
   border-radius: 10px; /* Extra rounded corners for Logout */
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  
+  text-decoration: none;
 }
 
-.nav-right li:last-child a:hover {
+.logout:hover {
   background-color: #e74c3c; /* Lighter red on hover */
   color: #fff; /* Ensure text remains white */
   transform: scale(1.1); /* Slight zoom effect on hover */
@@ -74,10 +83,10 @@
 }
 
 .menu-toggle-btn {
-  position: fixed;
+  
   top: 15px;
   left: 15px;
-  z-index: 1000;
+ 
   background-color: rgb(21, 138, 21);
   border: none;
   color: white;
@@ -93,19 +102,7 @@
   background-color: #1e7e1e;
 }
 
-/* Sidebar */
-.sidebar {
-  position: fixed;
-  left: -250px;
-  top: 0;
-  width: 250px;
-  height: 100vh;
-  background-color: rgba(255, 255, 255, 0.95);
-  transition: all 0.3s ease;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-}
+
 
 .sidebar.open {
   left: 0;
@@ -273,21 +270,7 @@
   color: #fff;
 }
 
-/* Style for the "Add Post" button */
-.add-post-btn {
-  background-color: #158a15; /* Green background color */
-  color: white;
-  border: none;
-  border-radius: 50%; /* Make it circular */
-  width: 60px; /* Button width */
-  height: 60px; /* Button height */
-  font-size: 20px; /* Font size */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+
 
 .add-post-btn:hover {
   background-color: #126e12; /* Darker green when hovered */
@@ -347,60 +330,16 @@
   background-color: #d32f2f;
 }
 
-/* Style to dim the background when modal is open */
-.main-content {
-  transition: transform 0.3s;
-}
-
-.main-content.shifted {
-  transform: translateX(250px); /* Slide content when menu is open */
-}
-
 
 footer {
-  text-align: center;
+  display: flex;
+  justify-content: right;
   padding: 1rem;
   background-color: rgb(21, 138, 21);
   color: white;
 }
 
 
-.add-post-btn {
-  background-color: rgb(21, 138, 21);
-  color: white;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
-}
-
-.add-post-btn:hover {
-  background-color: #1e7e1e;
-}
-
-
-/* Add Post Button */
-.add-post-btn {
-  background-color: #1b8a15; /* Green */
-  color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-.add-post-btn:hover {
-  background-color: #169b18;
-}
 
 /* Add Post Form */
 .add-post-form {
@@ -479,4 +418,172 @@ footer {
   background-color: #eaf4e7;  /* Soft greenish background */
   border-radius: 5px;
   border: 1px solid #aaa;  /* Subtle border to distinguish the message */
+}
+
+.user-profile {
+  position: absolute; /* Position the user icon in the top-right corner */
+  top: 10px; /* Adjust the distance from the top */
+  right: 20px; /* Adjust the distance from the right */
+  z-index: 10; /* Ensure it stays on top */
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* Make the image circular */
+  border: 2px solid #ddd; /* Optional border */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  
+}
+
+.user-icon:hover {
+  transform: scale(1.1); /* Slight zoom on hover */
+}
+
+
+/* Navbar styles */
+
+
+/* Left section (menu + logo) */
+
+
+/* Menu toggle button */
+.menu-toggle-btn {
+  background-color: #1b8a15; /* Blue color for the button */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  margin-right: 1rem; /* Space between button and logo */
+}
+
+.menu-toggle-btn:hover {
+  background-color: #169b18; /* Darker blue on hover */
+}
+
+/* Logo styles */
+
+
+/* User profile icon */
+.user-profile {
+  display: flex;
+  align-items: center;
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Right navigation links */
+.nav-right {
+  display: flex;
+  gap: 15px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Sidebar styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px; /* Hidden by default */
+  width: 250px;
+  height: 100%;
+  background-color: #f0f0f0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  transition: left 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.open {
+  left: 0; /* Show sidebar when open */
+}
+
+.menu-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-items li {
+  margin-bottom: 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.dropdown-menu .dropdown-toggle {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.submenu {
+  list-style: none;
+  padding: 5px 15px;
+  display: none;
+}
+
+.submenu.open {
+  display: block;
+}
+
+
+.social-links a {
+  display: block;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+.social-links a:hover {
+  color: #1b8a15;
+  text-decoration: none;
+}
+
+/* Main content shifted when sidebar is open */
+.main-content {
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+}
+
+
+
+/* Add Post Button */
+.add-post-btn {
+  position: fixed;
+  bottom: 5rem;
+  right: 20px;
+  background-color: #1b8a15;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-post-btn:hover {
+  background-color: #169b18;
+  transform: scale(1.1);
+}
+
+.logo{
+  margin-top: 7rem;
 }

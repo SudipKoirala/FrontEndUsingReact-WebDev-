@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import './HomePage.css';
 
 
+
+
+
+
 const Homepage = () => {
   const [query, setQuery] = useState('');
   const [response, setResponse] = useState('');
@@ -120,14 +124,6 @@ console.log(posts); // Check if the posts array updates after submission
     // Show success message
     alert("Your post has been successfully updated!");
   };
-  
-  
-  
-  
-  
-
-  
-
   // Function to handle upvote
   const handleUpvote = (post) => {
     post.upvotes += 1;
@@ -181,26 +177,19 @@ console.log(posts); // Check if the posts array updates after submission
       });
     }
   };
-  
 
-
-
-  
   const refreshPage = () => {
     window.location.reload();
   };
-
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev); // Toggle the sidebar state
   };
-
   const toggleSubmenu = (key) => {
     setSubmenuOpen((prev) => ({
       ...prev,
       [key]: !prev[key] // Toggle the specific submenu
     }));
   };
-
   // Close menu if clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -209,34 +198,23 @@ console.log(posts); // Check if the posts array updates after submission
         setSubmenuOpen({ dogs: false, cats: false }); // Close submenus
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
   return (
     <div className="homepage">
+      
       <nav className="navbar" style={{ backgroundColor: themeColor }}>
+              
         <div className="nav-left">
-          <div className="logo" onClick={refreshPage} style={{ cursor: 'pointer' }}>
-            PawFur
-          </div>
-        </div>
-        <ul className="nav-right">
-          <li><Link to="/about">About Us</Link></li>
-          <li><Link to="/contact">Contact Us</Link></li>
-          <li><Link to="/logout">Logout</Link></li>
-        </ul>
-      </nav>
-
-      {/* Sidebar Toggle */}
+          {/* Sidebar Toggle */}
       <button className="menu-toggle-btn" onClick={toggleMenu}>
-        {menuOpen ? 'Menu' : 'Menu'}
+        Menu
+        
       </button>
-
       <div className={`sidebar ${menuOpen ? 'open' : ''}`} ref={menuRef}>
         <ul className="menu-items">
           <li>Recent News</li>
@@ -267,7 +245,26 @@ console.log(posts); // Check if the posts array updates after submission
           <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
         </div>
       </div>
+          <div className="logo" onClick={refreshPage} style={{ cursor: 'pointer' }}>
+            PawFur
+          </div>
+        </div>
+        <div className="user-profile">
+      <Link to="/userpage">
+        <img
+          src="https://via.placeholder.com/40"
+          alt="User Profile"
+          className="user-icon"
+        />
+      </Link>
+    </div>
 
+    <ul className="nav-right">
+      <li><Link to="/about">About Us</Link></li>
+      <li><Link to="/contact">Contact Us</Link></li>
+    </ul>
+</nav>
+      
       <main className={`main-content ${menuOpen ? 'shifted' : ''}`}>
         <header className="hero">
           <h1>Welcome to PawFur</h1>
@@ -278,7 +275,6 @@ console.log(posts); // Check if the posts array updates after submission
 <button className="add-post-btn" onClick={() => setShowForm(true)}>
   Add Post
 </button>
-
 {/* Add Post Form */}
 {showForm && (
   <div className="add-post-form">
@@ -316,10 +312,6 @@ console.log(posts); // Check if the posts array updates after submission
     </div>
   </div>
 )}
-
-
-
-
         {/* Search Bot */}
         <section className="search-bot">
   <h2>Ask Our Search Bot</h2>
@@ -380,10 +372,7 @@ console.log(posts); // Check if the posts array updates after submission
     <p>Type something to search!</p>
   )}
 </div>
-
 </section>
-
-
         <section className="facts-section">
     <h2>Interesting Facts</h2>
     <div className="facts-grid">
@@ -395,10 +384,12 @@ console.log(posts); // Check if the posts array updates after submission
       ))}
     </div>
   </section>
+  <footer className="footer">
+  <Link to="/logout" className="logout">Logout</Link>
+</footer>
       </main>
     </div>
   );
 };
-
 
 export default Homepage;
