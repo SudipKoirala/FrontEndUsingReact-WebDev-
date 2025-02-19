@@ -4,12 +4,8 @@
   box-sizing: border-box;
 }
 
-body {
-  position: relative;
-  font-family: Arial, sans-serif;
-}
-
-body::before {
+/* Apply background only for LoginSignup page */
+.login-page-bg::before {
   content: "";
   position: absolute;
   top: 0;
@@ -23,17 +19,27 @@ body::before {
   z-index: -1;
 }
 
+
 /* Topbar */
 .topbar {
+  position: relative;
   display: flex;
+  justify-content: flex-start; /* Ensures contents start from the left */
 }
 
-.logo {
+.login-logo {
+  position: absolute;
+  top: 0;
+  left: 2rem;
+  width: 150px;
   height: 150px;
-  width: 200px;
   background-size: cover;
-  margin-right: 60px;
+  background-position: center;
 }
+
+
+
+
 
 .pictures {
   display: flex;
@@ -41,6 +47,7 @@ body::before {
   margin-left: auto;
   width: 70%;
 }
+
 
 .lpic, .spic {
   background-size: cover;
@@ -50,14 +57,13 @@ body::before {
 .lpic {
   height: 192px;
   width: 150px;
-  
 }
 
 .spic {
   height: 120px;
   width: 150px;
-  
 }
+
 
 /* Main Section */
 .main {

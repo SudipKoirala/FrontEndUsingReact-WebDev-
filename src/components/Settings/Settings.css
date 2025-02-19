@@ -1,0 +1,122 @@
+.settings-page {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  h2 {
+    color: rgb(21, 138, 21);
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .settings-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .settings-section label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .settings-section input,
+  .settings-section select {
+    width: 90%;
+    padding: 10px;
+    border: 2px solid rgb(21, 138, 21);
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+  }
+  
+  .preview-img {
+    margin-top: 10px;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid rgb(21, 138, 21);
+  }
+  
+  .save-button {
+    background: rgb(21, 138, 21);
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .save-button:hover {
+    background: darkgreen;
+  }
+  
+
+/* Button Styling */
+.back-btn {
+  margin-top: 0.8rem;
+  padding: 12px 24px;
+  background-color: rgb(21, 138, 21); /* Initial color */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 6px rgba(21, 138, 21, 0.2);
+}
+
+.back-btn::before {
+  content: "←";
+  margin-right: 4px;
+  transition: transform 0.3s ease;
+}
+
+/* Hover Effect - Dark Green */
+.back-btn:hover {
+  background-color: darkgreen; /* Dark Green on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(21, 138, 21, 0.3);
+}
+
+.back-btn:hover::before {
+  transform: translateX(-4px);
+}
+
+/* Active State - Slight push down effect */
+.back-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(21, 138, 21, 0.2);
+}
+
+/* Focus State - Highlight with outline */
+.back-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(21, 138, 21, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .back-btn {
+      padding: 10px 20px;
+      font-size: 0.95rem;
+  }
+}

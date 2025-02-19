@@ -1,0 +1,238 @@
+.pet-info-container {
+    max-width: 950px;
+    margin: 2.5rem auto;
+    padding: 3.5rem;
+    background: linear-gradient(145deg, #ffffff 0%, #f2f3f7 100%);
+    border-radius: 20px;
+    box-shadow: 
+        0 12px 35px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.pet-info-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Header Styling */
+.pet-info-container h2 {
+    font-size: 2.8rem;
+    color: rgb(21, 138, 21);
+    margin-bottom: 1.8rem;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.pet-info-container h2::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 4px;
+    background: linear-gradient(90deg, rgb(21, 138, 21), #38b000);
+    border-radius: 2px;
+}
+
+/* Description Text */
+.pet-info-container > p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #333;
+    text-align: center;
+    margin-bottom: 2.8rem;
+}
+
+/* Subsection Titles */
+.pet-info-container h3 {
+    font-size: 2rem;
+    color: #1b5e20;
+    margin: 2.5rem 0 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: bold;
+    position: relative;
+}
+
+.pet-info-container h3::before {
+    content: '🐾';
+    font-size: 1.6rem;
+    color: rgb(21, 138, 21);
+    position: relative;
+    animation: bounce 1s infinite alternate;
+}
+
+/* List Styling */
+.pet-info-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+}
+
+.pet-info-container li {
+    background: white;
+    margin-bottom: 1.2rem;
+    padding: 1.5rem 2rem;
+    border-radius: 14px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    border-left: 6px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.pet-info-container li:hover {
+    transform: translateX(8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    border-left-color: rgb(21, 138, 21);
+    background-color: rgb(21, 138, 21);
+}
+
+.pet-info-container li:hover strong {
+    color: white;
+}
+
+.pet-info-container li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, #1a237e, #3949ab);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.pet-info-container li:hover::before {
+    opacity: 1;
+}
+
+/* Strong text */
+.pet-info-container strong {
+    color: rgb(21, 138, 21);
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+/* Special Sections with Unique Colors */
+.pet-info-container h3:nth-of-type(1) + ul li {
+    border-left-color: #ff6b6b;
+}
+
+.pet-info-container h3:nth-of-type(2) + ul li {
+    border-left-color: #4dabf7;
+}
+
+.pet-info-container h3:nth-of-type(3) + ul li {
+    border-left-color: #37b24d;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .pet-info-container {
+        margin: 1rem;
+        padding: 2rem;
+    }
+
+    .pet-info-container h2 {
+        font-size: 2.2rem;
+    }
+
+    .pet-info-container h3 {
+        font-size: 1.7rem;
+    }
+
+    .pet-info-container li {
+        padding: 1.2rem 1.5rem;
+    }
+}
+
+/* Smooth Entrance Animation */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pet-info-container {
+    animation: slideIn 0.6s ease-out forwards;
+}
+
+/* Bounce Effect for Icons */
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-5px);
+    }
+}
+
+
+/* Button Styling */
+.back-btn {
+    padding: 12px 24px;
+    background-color: rgb(21, 138, 21); /* Initial color */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 6px rgba(21, 138, 21, 0.2);
+}
+
+.back-btn::before {
+    content: "←";
+    margin-right: 4px;
+    transition: transform 0.3s ease;
+}
+
+/* Hover Effect - Dark Green */
+.back-btn:hover {
+    background-color: darkgreen; /* Dark Green on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(21, 138, 21, 0.3);
+}
+
+.back-btn:hover::before {
+    transform: translateX(-4px);
+}
+
+/* Active State - Slight push down effect */
+.back-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(21, 138, 21, 0.2);
+}
+
+/* Focus State - Highlight with outline */
+.back-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(21, 138, 21, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .back-btn {
+        padding: 10px 20px;
+        font-size: 0.95rem;
+    }
+}

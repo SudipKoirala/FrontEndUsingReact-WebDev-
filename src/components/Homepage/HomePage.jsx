@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
-
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faPlus } from '@fortawesome/free-solid-svg-icons';// Import the menu icon (hamburger)
+import { faFacebook, faSquareInstagram, faSquareTwitter } from '@fortawesome/free-brands-svg-icons'; // Correct import for Facebook icon
 
 
 
 
 const Homepage = () => {
   const [query, setQuery] = useState('');
-  const [response, setResponse] = useState('');
+  const [postContent, setPostContent] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState({ dogs: false, cats: false });
   
@@ -19,8 +20,16 @@ const Homepage = () => {
   const [showPosts, setShowPosts] = useState(false);  // Track if posts should be shown
   const [posts, setPosts] = useState([]);
   const [searchResult, setSearchResult] = useState(null); // Stores the post or QA object
+  const [profilePic, setProfilePic] = useState("");
 
-  
+  useEffect(() => {
+    // Fetch stored profile picture from localStorage
+    const storedData = JSON.parse(localStorage.getItem("userProfile"));
+    if (storedData && storedData.profilePic) {
+      setProfilePic(storedData.profilePic); // Set profile picture
+    }
+  }, []);
+
   const menuRef = useRef(null);
 console.log(showForm); // Check if the form visibility changes
 console.log(newPost); // Check the current state of the form inputs
@@ -111,6 +120,8 @@ console.log(posts); // Check if the posts array updates after submission
       content: trimmedContent 
     };
   
+
+    
     // Add post to posts and searchPosts
     setPosts((prevPosts) => [...prevPosts, updatedPost]);
     setSearchPosts((prevSearchPosts) => [...prevSearchPosts, updatedPost]);
@@ -200,6 +211,8 @@ console.log(posts); // Check if the posts array updates after submission
     };
     document.addEventListener('mousedown', handleClickOutside);
 
+
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -211,21 +224,21 @@ console.log(posts); // Check if the posts array updates after submission
               
         <div className="nav-left">
           {/* Sidebar Toggle */}
-      <button className="menu-toggle-btn" onClick={toggleMenu}>
-        Menu
-        
+          <button className="menu-toggle-btn" onClick={toggleMenu}>
+        <FontAwesomeIcon icon={faBars} />
       </button>
       <div className={`sidebar ${menuOpen ? 'open' : ''}`} ref={menuRef}>
         <ul className="menu-items">
-          <li>Recent News</li>
+          <li><Link to="/recentnews">Recent News</Link></li>
           <li className="dropdown-menu">
             <div onClick={() => toggleSubmenu('dogs')} className="dropdown-toggle">
               About Dogs
             </div>
             <ul className={`submenu ${submenuOpen.dogs ? 'open' : ''}`}>
-              <li>Foods</li>
-              <li>Breed Info</li>
-              <li>Training</li>
+            <li><Link to="/dogs/breedinfo">Breed Info</Link></li>
+            <li><Link to="/dogs/foods">Foods</Link></li>
+            <li><Link to="/dogs/training">Training</Link></li>
+
             </ul>
           </li>
           <li className="dropdown-menu">
@@ -233,26 +246,33 @@ console.log(posts); // Check if the posts array updates after submission
               About Cats
             </div>
             <ul className={`submenu ${submenuOpen.cats ? 'open' : ''}`}>
-              <li>Nutrition</li>
-              <li>Behavior</li>
-              <li>Grooming</li>
+            <li><Link to="/cats/behavior">Behavior</Link></li>
+            <li><Link to="/cats/grooming">Grooming</Link></li>
+            <li><Link to="/cats/nutrition">Nutrition</Link></li>
             </ul>
           </li>
         </ul>
         <div className="social-links">
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
-        </div>
+  <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="facebook-icon">
+    <FontAwesomeIcon icon={faFacebook} />
+  </a>
+  <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="twitter-icon">
+    <FontAwesomeIcon icon={faSquareTwitter} />
+  </a>
+  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="instagram-icon">
+    <FontAwesomeIcon icon={faSquareInstagram} />
+  </a>
+</div>
+
       </div>
           <div className="logo" onClick={refreshPage} style={{ cursor: 'pointer' }}>
-            PawFur
+            
           </div>
         </div>
         <div className="user-profile">
-      <Link to="/userpage">
+      <Link to="/user">
         <img
-          src="https://via.placeholder.com/40"
+          src={profilePic || "https://via.placeholder.com/40"} // Fallback to placeholder if no image is stored
           alt="User Profile"
           className="user-icon"
         />
@@ -262,6 +282,9 @@ console.log(posts); // Check if the posts array updates after submission
     <ul className="nav-right">
       <li><Link to="/about">About Us</Link></li>
       <li><Link to="/contact">Contact Us</Link></li>
+      <Link to="/settings" className="settings-button">⚙️ Settings</Link>
+
+    
     </ul>
 </nav>
       
@@ -271,10 +294,13 @@ console.log(posts); // Check if the posts array updates after submission
           <p>Your ultimate pet care companion</p>
         </header>
 
-        {/* Add Post Button */}
-<button className="add-post-btn" onClick={() => setShowForm(true)}>
-  Add Post
-</button>
+
+        
+
+        <button className="add-post-btn" onClick={() => setShowForm(true)}>
+        <FontAwesomeIcon icon={faPlus} /> {/* Add the plus icon */}
+      </button>
+
 {/* Add Post Form */}
 {showForm && (
   <div className="add-post-form">
@@ -382,11 +408,31 @@ console.log(posts); // Check if the posts array updates after submission
           <p>{fact.fact}</p>
         </div>
       ))}
+      <Link to="/logout" className="logout">Logout</Link>
     </div>
   </section>
-  <footer className="footer">
-  <Link to="/logout" className="logout">Logout</Link>
-</footer>
+  
+
+      <footer className="footer">
+        <div className="footer-container">
+          {/* About Section */}
+          <div className="footer-about">
+            <h2>About PawFur</h2>
+            <p>Your go-to platform for pet lovers! Share experiences, get advice, and connect with a pet-loving community.</p>
+          </div>
+
+         
+
+          
+        </div>
+
+        {/* Copyright */}
+        <div className="footer-bottom">
+          <p>&copy; 2025 PawFur. All rights reserved.</p>
+        </div>
+      </footer>
+    
+
       </main>
     </div>
   );

@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './LoginSignUp.css';
-
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import logo from '../assets/logo.png';
-
+import logo from '../assets/logow.png';
 import firstImg from '../assets/1st.jpg';
 import secondImg from '../assets/2nd.jpg';
 import thirdImg from '../assets/3rd.jpg';
@@ -14,28 +12,38 @@ import cat from '../assets/meow.png';
 
 const LoginSignup = () => {
   const [action, setAction] = useState("Sign Up");
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Add class to body
+    document.body.classList.add("login-page-bg");
+
+    // Cleanup: Remove class when component unmounts
+    return () => {
+      document.body.classList.remove("login-page-bg");
+    };
+  }, []);
 
   const handleLogin = (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    // Add actual login validation here (optional)
-    navigate('/home'); // Redirect to the home page after login
+    e.preventDefault();
+    navigate('/home');
   };
 
   return (
     <div>
       <header>
-        <div className="topbar">
-          <div className="logo" style={{ backgroundImage: `url(${logo})` }}></div>
-          <div className="pictures">
-            <div className="lpic" style={{ backgroundImage: `url(${firstImg})` }}></div>
-            <div className="spic" style={{ backgroundImage: `url(${secondImg})` }}></div>
-            <div className="lpic" style={{ backgroundImage: `url(${thirdImg})` }}></div>
-            <div className="spic" style={{ backgroundImage: `url(${fourthImg})` }}></div>
-            <div className="lpic" style={{ backgroundImage: `url(${fifthImg})` }}></div>
-          </div>
-        </div>
-      </header>
+  <div className="topbar">
+    <div className="login-logo" style={{ backgroundImage: `url(${logo})` }}></div>
+    <div className="pictures">
+      <div className="lpic" style={{ backgroundImage: `url(${firstImg})` }}></div>
+      <div className="spic" style={{ backgroundImage: `url(${secondImg})` }}></div>
+      <div className="lpic" style={{ backgroundImage: `url(${thirdImg})` }}></div>
+      <div className="spic" style={{ backgroundImage: `url(${fourthImg})` }}></div>
+      <div className="lpic" style={{ backgroundImage: `url(${fifthImg})` }}></div>
+    </div>
+  </div>
+</header>
+
 
       <div className="main">
         <div className="leftbsign">
@@ -105,7 +113,6 @@ const LoginSignup = () => {
                 Login
               </div>
 
-              {/* Add a login button that redirects to the home page */}
               <div className="submit" onClick={handleLogin}>
                 Enter Home
               </div>
