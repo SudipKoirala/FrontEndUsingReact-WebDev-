@@ -10,14 +10,13 @@ import { faFacebook, faSquareInstagram, faSquareTwitter } from '@fortawesome/fre
 
 const Homepage = () => {
   const [query, setQuery] = useState('');
-  const [postContent, setPostContent] = useState('');
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState({ dogs: false, cats: false });
   
   const [newPost, setNewPost] = useState({ title: '', category: '', content: '', upvotes: 0, downvotes: 0 });
   const [showForm, setShowForm] = useState(false); // Manage form visibility
-  const [searchPosts, setSearchPosts] = useState([]);  // This will hold posts that should only appear via search
-  const [showPosts, setShowPosts] = useState(false);  // Track if posts should be shown
+  const [searchPosts, setSearchPosts] = useState([]);
   const [posts, setPosts] = useState([]);
   const [searchResult, setSearchResult] = useState(null); // Stores the post or QA object
   const [profilePic, setProfilePic] = useState("");
@@ -102,51 +101,74 @@ console.log(posts); // Check if the posts array updates after submission
   
   
 
-  const handlePostSubmit = () => {
-    // Trim and validate input fields
+ 
+
+
+  const handlePostSubmit = async () => {
     const trimmedTitle = newPost.title.trim();
     const trimmedContent = newPost.content.trim();
-    
+  
     if (!trimmedTitle || !newPost.category || !trimmedContent) {
-      alert("Please fill in all the fields (Title, Category, and Content) before submitting.");
+      alert("Please fill in all the fields before submitting.");
       return;
     }
   
-    // Create the updated post
-    const updatedPost = { 
-      ...newPost, 
-      id: Date.now(), 
-      title: trimmedTitle, 
-      content: trimmedContent 
+    const postData = {
+      title: trimmedTitle,
+      category: newPost.category,
+      content: trimmedContent,
+      user_id: 1,
     };
   
-
-    
-    // Add post to posts and searchPosts
-    setPosts((prevPosts) => [...prevPosts, updatedPost]);
-    setSearchPosts((prevSearchPosts) => [...prevSearchPosts, updatedPost]);
+    try {
+      const response = await fetch('http://localhost:5000/api/posts/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      });
   
-    // Reset the form fields
-    setNewPost({ title: '', category: '', content: '', upvotes: 0, downvotes: 0 });
+      if (!response.ok) {
+        throw new Error('Failed to create post');
+      }
   
-    // Hide the post form after submission
-    setShowForm(false);
-  
-    // Show success message
-    alert("Your post has been successfully updated!");
+      const createdPost = await response.json();
+      setPosts((prevPosts) => [...prevPosts, createdPost]);
+      setSearchPosts((prevSearchPosts) => [...prevSearchPosts, createdPost]);
+      setNewPost({ title: '', category: '', content: '', upvotes: 0, downvotes: 0 });
+      setShowForm(false);
+      alert('Your post has been successfully submitted!');
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Failed to submit post');
+    }
   };
-  // Function to handle upvote
-  const handleUpvote = (post) => {
-    post.upvotes += 1;
-    setSearchPosts([...searchPosts]); // Update the post list to reflect the changes
-    setSearchResult({ type: "post", data: post }); // Update the current post view
+  
+  
+  const handleUpvote = async (post) => {
+    try {
+      const response = await fetch(`/api/posts/upvote/${post.id}`, { method: 'PUT' });
+      const updatedPost = await response.json();
+      setSearchPosts(prevPosts => prevPosts.map(p => p.id === updatedPost.id ? updatedPost : p));
+      setSearchResult({ type: "post", data: updatedPost });
+    } catch (error) {
+      alert('Failed to upvote post');
+    }
   };
   
-  const handleDownvote = (post) => {
-    post.downvotes += 1;
-    setSearchPosts([...searchPosts]); // Update the post list to reflect the changes
-    setSearchResult({ type: "post", data: post }); // Update the current post view
+  const handleDownvote = async (post) => {
+    try {
+      const response = await fetch(`/api/posts/downvote/${post.id}`, { method: 'PUT' });
+      const updatedPost = await response.json();
+      setSearchPosts(prevPosts => prevPosts.map(p => p.id === updatedPost.id ? updatedPost : p));
+      setSearchResult({ type: "post", data: updatedPost });
+    } catch (error) {
+      alert('Failed to downvote post');
+    }
   };
+  
+  
   
   
   const handleSearch = () => {

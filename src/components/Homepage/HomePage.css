@@ -83,7 +83,7 @@ body::before {
 /* Styling for Logout Link */
 .logout {
   position: absolute;  
-  bottom: 14rem;
+  bottom: 12rem;
   right: 20px; 
   display: flex;
   justify-content: center;
@@ -689,7 +689,7 @@ body::before {
 .footer {
   background-color: rgb(21, 138, 21);
   color: white;
-  padding: 40px 20px;
+  padding: 1.5rem 20px;
   margin-top: 50px;
   text-align: center; /* Ensures text is centered */
 }

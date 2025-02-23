@@ -133,12 +133,13 @@
 .form-row {
   display: flex;
   gap: 10px;
+  height: 2rem;
   margin-bottom: 15px;
 }
 
 .form-row input {
   flex: 1;
-  padding: 8px;
+  padding: 5px;
   border: 1px solid rgb(21, 138, 21);
   border-radius: 5px;
   outline: none;
@@ -174,13 +175,13 @@ input[type="password"] {
   text-decoration: underline;
 }
 
-.label {
+.terms{
   color: black;
-  font-size: 12px;
+  font-size: 0.9rem;
   margin-bottom: 15px;
 }
 
-.label span {
+.terms span {
   color: rgb(21, 138, 21);
 cursor: pointer;
 }
@@ -201,11 +202,55 @@ cursor: pointer;
 }
 
 .submit.gray {
-  background-color: #ccc;
-  color: #888;
+  background-color: rgb(21, 138, 21);
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 5px;
   cursor: pointer;
+  text-align: center;
 }
 
 .submit:hover {
   background-color: rgb(17, 118, 17);
 }
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+}
+
+.popup-content input {
+  margin: 10px 0;
+  padding: 8px;
+  width: 100%;
+}
+
+.popup-content button {
+  margin: 10px;
+  padding: 10px;
+  background-color: #21B521;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.popup-content button:hover {
+  background-color: #179d17;
+}
+
+

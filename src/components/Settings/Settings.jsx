@@ -53,6 +53,10 @@ const Settings = () => {
     navigate("/home");
   };
 
+  const handleSignUp = () => {
+    navigate("/");
+  };
+
   return (
     <div className="settings-page">
       <h2>Settings</h2>
@@ -90,6 +94,8 @@ const Settings = () => {
       <button onClick={handleSave} className="save-button">Save Changes</button>
 
       <button onClick={handleBackToHome} className="back-btn">Back to Home</button>
+      <button onClick={handleSignUp} className="logout">Log out</button>
+      
     </div>
   );
 };

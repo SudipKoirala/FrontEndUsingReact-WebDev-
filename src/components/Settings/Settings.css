@@ -120,3 +120,59 @@
       font-size: 0.95rem;
   }
 }
+
+/* Settings.css */
+.image-preview {
+  margin-top: 10px;
+  max-width: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.image-preview img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.file-input {
+  margin-top: 5px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #fff3f3;
+  border-radius: 4px;
+}
+
+
+/* Styling for Logout Link */
+.logout {
+  position: absolute;  
+  bottom:1.5rem;
+  right: 10rem; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #c0392b; /* Red for Logout */
+  color: white; /* White text */
+  font-weight: bold;
+  padding: 5px 5px;
+  border: 2px solid #e74c3c; /* Border with a lighter red */
+  border-radius: 10px; /* Extra rounded corners for Logout */
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  
+  text-decoration: none;
+  height: 2.5rem;
+  width: 6rem;
+}
+
+.logout:hover {
+  background-color: #e74c3c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+  transition: all 0.3s ease;
+}
