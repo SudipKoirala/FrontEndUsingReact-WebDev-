@@ -6,28 +6,24 @@ import { faBars, faPlus } from '@fortawesome/free-solid-svg-icons';// Import the
 import { faFacebook, faSquareInstagram, faSquareTwitter } from '@fortawesome/free-brands-svg-icons'; // Correct import for Facebook icon
 
 
-
-
 const Homepage = () => {
   const [query, setQuery] = useState('');
-
   const [menuOpen, setMenuOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState({ dogs: false, cats: false });
-  
   const [newPost, setNewPost] = useState({ title: '', category: '', content: '', upvotes: 0, downvotes: 0 });
   const [showForm, setShowForm] = useState(false); // Manage form visibility
-  const [searchPosts, setSearchPosts] = useState([]);
+  const [ setSearchPosts] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [searchResult, setSearchResult] = useState(null); // Stores the post or QA object
-  const [profilePic, setProfilePic] = useState("");
-
-  useEffect(() => {
-    // Fetch stored profile picture from localStorage
-    const storedData = JSON.parse(localStorage.getItem("userProfile"));
-    if (storedData && storedData.profilePic) {
-      setProfilePic(storedData.profilePic); // Set profile picture
-    }
-  }, []);
+  const [searchResult, setSearchResult] = useState(null);
+  const [profilePic, setProfilePic] = useState('');
+  const [showModal, setShowModal] = useState(false); // Modal for confirmation popup
+  
+  // Popup state
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState('');
+  const [notificationType, setNotificationType] = useState('success');
+  const notificationTimeoutRef = useRef(null);
+  
 
   const menuRef = useRef(null);
 console.log(showForm); // Check if the form visibility changes
@@ -104,22 +100,29 @@ console.log(posts); // Check if the posts array updates after submission
  
 
 
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem('userProfile'));
+    if (storedData && storedData.profilePic) {
+      setProfilePic(storedData.profilePic); // Set profile picture
+    }
+  }, []);
+
   const handlePostSubmit = async () => {
     const trimmedTitle = newPost.title.trim();
     const trimmedContent = newPost.content.trim();
-  
+
     if (!trimmedTitle || !newPost.category || !trimmedContent) {
-      alert("Please fill in all the fields before submitting.");
+      alert('Please fill in all the fields before submitting.');
       return;
     }
-  
+
     const postData = {
       title: trimmedTitle,
       category: newPost.category,
       content: trimmedContent,
       user_id: 1,
     };
-  
+
     try {
       const response = await fetch('http://localhost:5000/api/posts/create', {
         method: 'POST',
@@ -128,21 +131,41 @@ console.log(posts); // Check if the posts array updates after submission
         },
         body: JSON.stringify(postData),
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to create post');
       }
-  
+
       const createdPost = await response.json();
       setPosts((prevPosts) => [...prevPosts, createdPost]);
       setSearchPosts((prevSearchPosts) => [...prevSearchPosts, createdPost]);
       setNewPost({ title: '', category: '', content: '', upvotes: 0, downvotes: 0 });
       setShowForm(false);
-      alert('Your post has been successfully submitted!');
+
+      setShowModal(true); // Show the modal on successful post submission
+      showPopupNotification('Post created successfully!');
     } catch (error) {
       console.error('Error:', error);
-      alert('Failed to submit post');
+      showPopupNotification('Failed to submit post', 'error');
     }
+  };
+
+  const showPopupNotification = (message, type = 'success') => {
+    if (notificationTimeoutRef.current) {
+      clearTimeout(notificationTimeoutRef.current);
+    }
+    
+    setNotificationMessage(message);
+    setNotificationType(type);
+    setShowNotification(true);
+
+    notificationTimeoutRef.current = setTimeout(() => {
+      setShowNotification(false);
+    }, 3000);
+  };
+
+  const closeModal = () => {
+    setShowModal(false); // Close the modal when clicked outside or button pressed
   };
   
   
@@ -239,6 +262,7 @@ console.log(posts); // Check if the posts array updates after submission
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
   return (
     <div className="homepage">
       
@@ -323,43 +347,67 @@ console.log(posts); // Check if the posts array updates after submission
         <FontAwesomeIcon icon={faPlus} /> {/* Add the plus icon */}
       </button>
 
-{/* Add Post Form */}
-{showForm && (
-  <div className="add-post-form">
-    <input
-      type="text"
-      placeholder="Post Title"
-      value={newPost.title}
-      onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
-    />
-    
-    {/* Category Dropdown */}
-    <select
-      value={newPost.category}
-      onChange={(e) => setNewPost({ ...newPost, category: e.target.value })}
-      className="category-dropdown"
-    >
-      <option value="">Select Category</option>
-      <option value="Dogs">Dogs</option>
-      <option value="Cats">Cats</option>
-    </select>
+{/* Popup Notification */}
+{showNotification && (
+        <div className={`notification ${notificationType}`}>
+          <span>{notificationMessage}</span>
+          <button
+            className="close-notification"
+            onClick={() => setShowNotification(false)}
+          >
+            ×
+          </button>
+        </div>
+      )}
 
-    <textarea
-      placeholder="Content"
-      value={newPost.content}
-      onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
-    />
-    
-    <div className="form-actions">
-      <button className="submit-btn" onClick={handlePostSubmit}>
-        Submit Post
-      </button>
-      <button className="cancel-btn" onClick={() => setShowForm(false)}>
-        Cancel
-      </button>
-    </div>
-  </div>
-)}
+      {/* Add Post Form */}
+      {showForm && (
+        <div className="add-post-form">
+          <input
+            type="text"
+            placeholder="Post Title"
+            value={newPost.title}
+            onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+          />
+          <select
+            value={newPost.category}
+            onChange={(e) => setNewPost({ ...newPost, category: e.target.value })}
+            className="category-dropdown"
+          >
+            <option value="">Select Category</option>
+            <option value="Dogs">Dogs</option>
+            <option value="Cats">Cats</option>
+          </select>
+
+          <textarea
+            placeholder="Content"
+            value={newPost.content}
+            onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
+          />
+
+          <div className="form-actions">
+            <button className="submit-btn" onClick={handlePostSubmit}>
+              Submit Post
+            </button>
+            <button className="cancel-btn" onClick={() => setShowForm(false)}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Success Modal */}
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Your post has been submitted successfully!</h2>
+            <button className="close-btn" onClick={closeModal}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
         {/* Search Bot */}
         <section className="search-bot">
   <h2>Ask Our Search Bot</h2>
