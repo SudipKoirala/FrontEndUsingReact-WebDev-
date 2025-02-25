@@ -43,9 +43,10 @@ const UserPage = () => {
         <p><strong>Pet Type:</strong> {profileData.petType}</p>
         <p><strong>Breed:</strong> {profileData.breed}</p>
         <p><strong>Age:</strong> {profileData.age}</p>
-        <button onClick={handleBackToHome} className="back-btn">Back to Home</button>
+        
         
       </div>
+      <button onClick={handleBackToHome} className="back-btn">Back to Home</button>
     </div>
   );
 };

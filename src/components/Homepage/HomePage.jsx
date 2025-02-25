@@ -430,7 +430,7 @@ console.log(posts); // Check if the posts array updates after submission
           <p>{fact.fact}</p>
         </div>
       ))}
-      <Link to="/logout" className="logout">Logout</Link>
+      
     </div>
   </section>
   

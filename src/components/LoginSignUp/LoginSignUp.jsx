@@ -49,7 +49,7 @@ const LoginSignup = () => {
 
         if (response.data.success) {
           triggerPopup("Account created successfully! Please log in.");
-          setTimeout(() => setAction("Login"), 2000); // Switch to Login page
+          setTimeout(() => setAction("Login"), 1000); // Switch to Login page
         } else {
           triggerPopup("Signup failed: " + response.data.message); // Showing backend message
         }
@@ -65,7 +65,7 @@ const LoginSignup = () => {
           if (response.data.success) {
             localStorage.setItem("token", response.data.token);
             triggerPopup("Login successful!");
-            setTimeout(() => navigate("/home"), 2000); // Navigate to home page
+            setTimeout(() => navigate("/home"), 1000); // Navigate to home page
           } else {
             triggerPopup("Login failed: " + response.data.message);
           }
@@ -77,8 +77,11 @@ const LoginSignup = () => {
     };
     
   return (
-    <div>
+    
+
+    <div className="login-page-bg">
       <header>
+
         <div className="topbar">
           <div className="login-logo" style={{ backgroundImage: `url(${logo})` }}></div>
           <div className="pictures">
